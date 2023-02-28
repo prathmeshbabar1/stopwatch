@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            flex-direction: column;
+            gap: 10px;
+        }
+        .buttons{
+            display: flex;
+            gap: 20px;
+        }
+        .start{
+            color: green;
+            border: 1px solid green;
+            background-color: inherit;
+        }
+        .pause{
+            color: red;
+            border: 1px solid red;
+            background-color: inherit;
+        }
+        .reset{
+            color: rgb(218, 218, 15);
+            border: 1px solid rgb(230, 230, 25);
+            background-color: inherit;
+        }
+        .cast{
+            color: black;
+            border: 1px solid black;
+            background-color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="count" >00 : 00 : 00 : 000</span>
+      <div class="buttons">
+        <button class="start" onclick="{startFunction()}">Start</button>
+        <button class="pause" onclick="{pauseFunction()}">Pause</button>
+        <button class="reset" onclick="{resetFunction()}">Reset</button>
+        <button class="cast" onclick="{childAdd()}" >Cast</button>
+      </div>
+      <div id="createchild">
+
+      </div>  
+    </div>
+    
+    <script>
+let count = document.getElementsByClassName('count')[0]
+let time =0
+let time1 = 0
+let interval =0
+        function startFunction(){
+            time = Date.now()-time1
+ interval =  setInterval(timerChange,10)
+ document.getElementsByClassName('start')[0].disabled = true;
+
+        }
+        function pauseFunction(){
+let count = document.getElementsByClassName('count')[0]
+clearInterval(interval);
+document.getElementsByClassName('start')[0].disabled = false;
+        }
+function resetFunction(){
+    clearInterval(interval);
+document.getElementsByClassName('start')[0].disabled = false;
+
+    time1 = 0;
+    counter();
+
+}
+   
+        function childAdd(){
+   
+    function addChild(){
+    let child = document.createElement('div')
+    
+     
+     child.setAttribute('class',"count");
+ 
+     child.textContent = document.getElementsByClassName('count')[0].textContent
+     
+return child
+}
+console.log( document.getElementById('createchild').appendChild(addChild()));
+
+}
+function timerChange(){
+    time1 = Date.now() - time;
+    counter();
+}
+function counter(){
+    let hour = Math.floor(time1 / 3600000)
+    let minute = Math.floor((time1 - hour*3600000)/60000);
+    let second = Math.floor((time1- hour*3600000 - minute*60000)/1000);
+    let millisecond =  Math.floor((time1- - hour*3600000 -  minute*60000-second*1000)/10);
+    count.textContent =  `${hour.toString().padStart(2, '00')}:${minute.toString().padStart(2, '00')}:${second.toString().padStart(2, '00')}:${millisecond.toString().padStart(2, '00')}`
+}
+
+    </script>
+</body>
+</html>
